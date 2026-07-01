@@ -1,6 +1,6 @@
 import { useState } from 'react';
 {/* Componentes */}
-import Navbar from './components/navbar';
+import Navbar from './components/Navbar';
 import ProjectCard from './components/ProjectCard';
 import About from './components/About';
 import Skills from './components/Skills';
