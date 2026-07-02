@@ -30,7 +30,7 @@ const proyectos = [
       resumenEN: "React Portfolio with the latest technologies",
       imagen: imgPort,
       linkRepo: "https://github.com/SHARINFEST",
-      linkWeb: "#",
+      linkWeb: "https://portafolio-profesional-y-responsivo.vercel.app/",
       button1ES: 'Código',
       button1EN: 'Code',
       button2ES: 'es este',
@@ -135,7 +135,7 @@ const proyectos = [
             </p>
             
             <a 
-              href="/tu-cv.pdf" 
+              href= { idioma === 'ES' ? '/Cvdef2026.pdf' : '/Cvengdef26.pdf'} 
               download="CV_Alfredo.pdf"
               className="inline-block bg-emerald-500 hover:bg-emerald-400 text-gray-950 px-6 py-3 rounded-lg font-bold uppercase tracking-wider text-sm transition-colors shadow-lg"
             >
