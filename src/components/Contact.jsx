@@ -1,18 +1,44 @@
 import React, { useState } from 'react';
 
 export default function Contact({ idioma }) {
-  // Estado para controlar los campos del formulario
-  const [formData, setFormData] = useState({ nombre: '', email: '', mensaje: '' });
+ 
+  const [formData, setFormData] = useState({ nombre: '', numero: '', email: '', mensaje: '' });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Aquí se conectará la lógica del webhook de n8n más adelante
-    console.log("Datos listos para enviar a n8n:", formData);
-    alert(idioma === "ES" ? "¡Mensaje listo! (Conexión a n8n próximamente)" : "Message ready! (n8n connection coming soon)");
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Evita que la página se recargue e interrumpa el envío con elpreventblabla
+
+    
+    const webhookUrl = "http://localhost:5678/webhook-test/contacto-portafolio";
+
+    try {
+      // Dispara la petición HTTP POST hacia el n8n
+      const response = await fetch(webhookUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData), // Converte el objeto formData a texto JSON
+      });
+
+      // Si el servidor n8n responde que recibió el paquete con éxito
+      if (response.ok) {
+        alert(idioma === "ES" ? "¡Mensaje enviado con éxito!" : "Message sent successfully!");
+        
+        // Limpia los campos del formulari
+        setFormData({ nombre: '', numero: '', email: '', mensaje: '' });
+      } else {
+        console.error("Error en la respuesta del servidor n8n");
+        alert(idioma === "ES" ? "Hubo un problema en el servidor." : "There was a server issue.");
+      }
+    } catch (error) {
+      console.error("Error de red conectado con n8n:", error);
+      alert(idioma === "ES" ? "No se pudo conectar con el servidor." : "Could not connect to the server.");
+    }
   };
 
   return (
@@ -41,7 +67,7 @@ export default function Contact({ idioma }) {
           <div className="pt-4 flex flex-col sm:flex-row gap-4">
             {/* LinkedIn */}
             <a 
-              href="https://linkedin.com/in/tu-perfil" // ← Cambia por tu link real
+              href="https://www.linkedin.com/in/jos%C3%A9-alfredo-fuentes-ojeda-56995a117" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 border border-emerald-500 text-emerald-400 hover:bg-emerald-500 hover:text-gray-950 px-5 py-3 rounded-xl font-bold transition-all duration-300 shadow-lg shadow-emerald-500/5 text-sm"
@@ -51,7 +77,7 @@ export default function Contact({ idioma }) {
 
             {/* GitHub */}
             <a 
-              href="https://github.com/SHARINFEST" // ← Tu GitHub real
+              href="https://github.com/SHARINFEST" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 border border-gray-700 bg-gray-900 text-gray-100 hover:border-gray-500 px-5 py-3 rounded-xl font-bold transition-all duration-300 text-sm"
@@ -82,21 +108,21 @@ export default function Contact({ idioma }) {
             />
           </div>
 
+          {/* Campo número de teléfono */}
           <div>
-  {/* Campo numero de telefono */}
-  <label className="block text-xs font-mono text-gray-400 uppercase tracking-wider mb-2">
-    {idioma === "ES" ? "Teléfono" : "Phone Number"}
-  </label>
-  <input 
-    type="tel" 
-    name="numero"
-    value={formData.numero}
-    onChange={handleChange}
-    required
-    className="w-full bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-gray-100 placeholder-gray-600 focus:outline-none focus:border-emerald-500 transition-colors text-sm"
-    placeholder="+52 5x xxxx xxxx"
-  />
-</div>
+            <label className="block text-xs font-mono text-gray-400 uppercase tracking-wider mb-2">
+              {idioma === "ES" ? "Teléfono" : "Phone Number"}
+            </label>
+            <input 
+              type="tel" 
+              name="numero"
+              value={formData.numero}
+              onChange={handleChange}
+              required
+              className="w-full bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-gray-100 placeholder-gray-600 focus:outline-none focus:border-emerald-500 transition-colors text-sm"
+              placeholder="+52 5x xxxx xxxx"
+            />
+          </div>
 
           {/* Campo Correo */}
           <div>
@@ -141,7 +167,7 @@ export default function Contact({ idioma }) {
 
       </div>
 
-      {/* Footer de derechos de autor al final de la sección */}
+      {/* Footer al final de la sección */}
       <p className="text-center text-xs text-gray-600 mt-20">
         © 2026 Alfredo.dev. All rights reserved.
       </p>
