@@ -135,7 +135,7 @@ const proyectos = [
             </p>
             
             <a 
-              href= { idioma === 'ES' ? '/Cvdef2026.pdf' : '/Cvengdef26.pdf'} 
+              href= { idioma === 'ES' ? '/cvdefult2026.pdf' : '/Cvengdef26.pdf'} 
               download="CV_Alfredo.pdf"
               className="inline-block bg-emerald-500 hover:bg-emerald-400 text-gray-950 px-6 py-3 rounded-lg font-bold uppercase tracking-wider text-sm transition-colors shadow-lg"
             >
